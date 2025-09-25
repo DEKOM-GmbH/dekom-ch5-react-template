@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
+html {
+    font-size: 16px;
+}
+
 body {
     background-color: #121212;
     font-family: 'Roboto', sans-serif;
@@ -9,6 +13,7 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
+    font-size: 3rem;
 }
 
 .controlGroupWrapper {
@@ -32,7 +37,7 @@ body {
     margin-bottom: 1rem;
 }
 
-.controlGroup .btn {
+.controlGroup .btn{
     /* margin: 1rem; */
     outline: none;
     background-color: #0895e7;
@@ -41,13 +46,27 @@ body {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
     padding: 14px 40px;
-    font-size: 16px;
+    font-size: 1.2rem;
+    width: 20vh;
+    height: 10vh;
 }
 
 .controlGroup .btn:active {
     background-color: #71a0bb;
 }
 
+.controlGroup .btnSelected {
+    background-color: #71a0bb;
+    outline: none;
+    color: #ffffff;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+    padding: 14px 40px;
+    font-size: 1.2rem;
+    width: 20vh;
+    height: 10vh;
+}
 .controlGroup p {
     color: #ffffff;
     font-size: 2rem;
