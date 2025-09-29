@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 
+import { HugeiconsIcon } from '@hugeicons/react'
+import { Mic01Icon, MicOff01Icon } from '@hugeicons/core-free-icons';
+
 function sendDigitalEvent(joinNumber: string, value: boolean) {
     window.CrComLib.publishEvent('b', joinNumber, value);
 }
@@ -11,13 +14,14 @@ function sendDigitalClick(joinNumber: string){
 
 interface DigitalButtonProps {
     joinNumber: string;
-    label: string;
+    label?: string;
     debug?: boolean;
 }
 
 export function Button(props:DigitalButtonProps) {
     
-    //If Debug
+    // Check optional props and handle
+    const label = props.label !== undefined ? props.label : '';
     const debug = props.debug !== undefined ? props.debug : false;
     
     // Declare variable and its setter method with default value
@@ -38,7 +42,36 @@ export function Button(props:DigitalButtonProps) {
     
     return (
         <button id="digitalButton" className={digitalState ? "btnSelected" : "btn"} onClick={() => sendDigitalClick(props.joinNumber)}>
-            {props.label}
+            {label}
+        </button>
+    );
+}
+
+export function MuteButton(props:DigitalButtonProps) {
+    
+    // Check optional props and handle
+    const label = props.label !== undefined ? props.label : '';
+    const debug = props.debug !== undefined ? props.debug : false;
+    
+    // Declare variable and its setter method with default value
+    const [digitalState, setDigitalState] = useState(false);
+
+    useEffect(() => {
+        const digitalSubscribe = window.CrComLib.subscribeState('boolean', props.joinNumber, (value: boolean) => setDigitalState(value));
+        
+        // Unsubscribe when component unmounts!
+        return () => {
+            window.CrComLib.unsubscribeState('boolean', props.joinNumber, digitalSubscribe);
+        }
+    })
+
+    if(debug) {
+        console.log(`Button click from join number ${props.joinNumber} and program state is ${digitalState}.`);
+    }
+    
+    return (
+        <button id="digitalButton" className={digitalState ? "btnSelected" : "btn"} onClick={() => sendDigitalClick(props.joinNumber)}>
+            <HugeiconsIcon icon={digitalState ? MicOff01Icon : Mic01Icon} />{label}
         </button>
     );
 }

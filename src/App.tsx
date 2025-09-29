@@ -3,7 +3,7 @@
 import './assets/css/App.css' // Your CSS
 import { useState, useEffect, useMemo } from 'react';
 import useWebXPanel from './hooks/useWebXPanel';
-import { Button } from './components/Buttons';
+import { Button, MuteButton } from './components/Buttons';
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
 if (import.meta.env.VITE_APP_ENV === 'development') {
@@ -71,10 +71,12 @@ function App() {
       <p style={{ color: 'white' }}>Joins</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <Button joinNumber='1' label='Button 1'/>
+          <Button joinNumber='1' label='Button 1' />
+          <MuteButton joinNumber='1' />
         </div>
         <div className="controlGroup">
           <Button joinNumber='10' label='Button 10'/>
+          <MuteButton joinNumber='10'/>
         </div>
         <div className="controlGroup">
             <p id="currentAnalogValue">{analogState}</p>
