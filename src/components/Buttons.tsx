@@ -12,9 +12,13 @@ function sendDigitalClick(joinNumber: string){
 interface DigitalButtonProps {
     joinNumber: string;
     label: string;
+    debug?: boolean;
 }
 
 export function Button(props:DigitalButtonProps) {
+    
+    //If Debug
+    const debug = props.debug !== undefined ? props.debug : false;
     
     // Declare variable and its setter method with default value
     const [digitalState, setDigitalState] = useState(false);
@@ -27,6 +31,10 @@ export function Button(props:DigitalButtonProps) {
             window.CrComLib.unsubscribeState('b', props.joinNumber, digitalSubscribe);
         }
     })
+
+    if(debug) {
+        console.log(`Button click from join number ${props.joinNumber} and program state is ${digitalState}.`);
+    }
     
     return (
         <button id="digitalButton" className={digitalState ? "btnSelected" : "btn"} onClick={() => sendDigitalClick(props.joinNumber)}>{props.label}</button>
