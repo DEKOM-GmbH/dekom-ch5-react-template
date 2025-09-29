@@ -38,14 +38,12 @@ body {
 }
 
 .controlGroup .btn{
-    /* margin: 1rem; */
+    margin: 1rem;
     outline: none;
-    background-color: #0895e7;
-    color: #ffffff;
     border: 0;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-    padding: 14px 40px;
+    padding: 20px;
     font-size: 1.2rem;
     width: 20vh;
     height: 10vh;
@@ -55,30 +53,18 @@ body {
     background-color: #71a0bb;
 }
 
-.controlGroup .btnSelected {
-    background-color: #0862ff;
-    outline: none;
+.controlGroup .normal {
+    background-color: #0895e7;
     color: #ffffff;
-    border: 0;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-    padding: 14px 40px;
-    font-size: 1.2rem;
-    width: 20vh;
-    height: 10vh;
 }
 
-.controlGroup .btnMuted {
+.controlGroup .selected {
+    background-color: #0862ff;
+}
+
+.controlGroup .muted {
     background-color: #e20f0f;
-    outline: none;
     color: #ffffff;
-    border: 0;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-    padding: 14px 40px;
-    font-size: 1.2rem;
-    width: 20vh;
-    height: 10vh;
 }
 
 .controlGroup p {

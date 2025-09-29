@@ -41,7 +41,7 @@ export function Button(props:DigitalButtonProps) {
     }
     
     return (
-        <button id="digitalButton" className={digitalState ? "btnSelected" : "btn"} onClick={() => sendDigitalClick(props.joinNumber)}>
+        <button id="digitalButton" className={digitalState ? "btn selected" : "btn normal"} onClick={() => sendDigitalClick(props.joinNumber)}>
             {label}
         </button>
     );
@@ -70,7 +70,7 @@ export function MuteButton(props:DigitalButtonProps) {
     }
     
     return (
-        <button id="digitalButton" className={digitalState ? "btnMuted" : "btn"} onClick={() => sendDigitalClick(props.joinNumber)}>
+        <button id="digitalButton" className={digitalState ? "btn muted" : "btn normal"} onClick={() => sendDigitalClick(props.joinNumber)}>
             <HugeiconsIcon icon={digitalState ? MicOff01Icon : Mic01Icon} />{label}
         </button>
     );
