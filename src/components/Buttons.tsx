@@ -15,6 +15,7 @@ function sendDigitalClick(joinNumber: string){
 interface DigitalButtonProps {
     joinNumber: string;
     joinNumberFb?: string;
+    invisible?: boolean;
     label?: string;
     debug?: boolean;
 }
@@ -23,6 +24,7 @@ export function Button(props:DigitalButtonProps) {
     
     // Check optional props and handle
     const joinNumberFb = props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
+    const invisible = props.invisible !== undefined ? props.invisible : false;
     const label = props.label !== undefined ? props.label : '';
     const debug = props.debug !== undefined ? props.debug : false;
     
@@ -44,7 +46,7 @@ export function Button(props:DigitalButtonProps) {
     }
     
     return (
-        <button id="digitalButton" className={digitalState ? "btn selected" : "btn normal"} onClick={() => sendDigitalClick(props.joinNumber)}>
+        <button id="digitalButton" className={`${digitalState ? "btn selected" : "btn normal"} ${invisible ? "invisible" : ""}`} onClick={() => sendDigitalClick(props.joinNumber)}>
             {label}
         </button>
     );
@@ -54,6 +56,7 @@ export function MuteButton(props:DigitalButtonProps) {
     
     // Check optional props and handle
     const joinNumberFb = props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
+    const invisible = props.invisible !== undefined ? props.invisible : false;
     const label = props.label !== undefined ? props.label : '';
     const debug = props.debug !== undefined ? props.debug : false;
     
@@ -74,7 +77,7 @@ export function MuteButton(props:DigitalButtonProps) {
     }
     
     return (
-        <button id="digitalButton" className={digitalState ? "btn muted" : "btn normal"} onClick={() => sendDigitalClick(props.joinNumber)}>
+        <button id="digitalButton" className={`${digitalState ? "btn muted" : "btn normal"} ${invisible ? "invisible" : ""}`} onClick={() => sendDigitalClick(props.joinNumber)}>
             <HugeiconsIcon icon={digitalState ? MicOff01Icon : Mic01Icon} />{label}
         </button>
     );

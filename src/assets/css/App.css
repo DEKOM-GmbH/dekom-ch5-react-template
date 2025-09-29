@@ -53,6 +53,10 @@ body {
     background-color: #71a0bb;
 }
 
+.controlGroup .invisible {
+    display: none;
+}
+
 .controlGroup .normal {
     background-color: #0895e7;
     color: #ffffff;
