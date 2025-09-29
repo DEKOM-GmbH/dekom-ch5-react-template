@@ -57,6 +57,10 @@ body {
     display: none;
 }
 
+.controlGroup .disabled {
+    opacity: 0.5;
+}
+
 .controlGroup .normal {
     background-color: #0895e7;
     color: #ffffff;
