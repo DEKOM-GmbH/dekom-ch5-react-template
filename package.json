@@ -20,6 +20,8 @@
     "@crestron/ch5-crcomlib": "^2.16.0",
     "@crestron/ch5-theme": "^2.16.0",
     "@crestron/ch5-webxpanel": "^2.8.0",
+    "@hugeicons/core-free-icons": "^1.1.0",
+    "@hugeicons/react": "^1.1.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
