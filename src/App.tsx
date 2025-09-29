@@ -3,6 +3,7 @@
 import './assets/css/App.css' // Your CSS
 import { useState, useEffect, useMemo } from 'react';
 import useWebXPanel from './hooks/useWebXPanel';
+import { Button } from './components/Buttons';
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
 if (import.meta.env.VITE_APP_ENV === 'development') {
@@ -12,8 +13,6 @@ if (import.meta.env.VITE_APP_ENV === 'development') {
 }
 
 function App() {
-  const [digitalState1, setDigitalState1] = useState(false);
-  const [digitalState10, setDigitalState10] = useState(false);
   const [analogState, setAnalogState] = useState(0);
   const [serialState, setSerialState] = useState("");
   const [digitalContractState, setDigitalContractState] = useState(false);
@@ -33,8 +32,6 @@ function App() {
     // Listen for digital, analog, and serial joins 1 from the control system.
     // d1Id, a1Id, and s1Id are the subscription IDs for each join, they are 
     // only used to unsubscribe from the join when the component unmounts
-    const d1Id = window.CrComLib.subscribeState('b', '1', (value: boolean) => setDigitalState1(value));
-    const d10Id = window.CrComLib.subscribeState('b', '10', (value: boolean) => setDigitalState10(value));
     const a1Id = window.CrComLib.subscribeState('n', '1', (value: number) => setAnalogState(value));
     const s1Id = window.CrComLib.subscribeState('s', '1', (value: string) => setSerialState(value));
 
@@ -45,9 +42,6 @@ function App() {
 
     return () => {
       // Unsubscribe from digital, analog, and serial joins 1 when component unmounts
-      window.CrComLib.unsubscribeState('b', '1', d1Id);
-      window.CrComLib.unsubscribeState('b', '10', d10Id);
-      window.CrComLib.unsubscribeState('n', '1', a1Id);
       window.CrComLib.unsubscribeState('s', '1', s1Id);
 
       // Contracts
@@ -58,7 +52,6 @@ function App() {
   }, []);
 
   // Send digital, analog, and serial 1 joins to the control system
-  const sendDigital = (value: boolean, joinNumber: string) => window.CrComLib.publishEvent('b', joinNumber, value);
   const sendAnalog = (value: number) => window.CrComLib.publishEvent('n', '1', value);
   const sendSerial = (value: string) => window.CrComLib.publishEvent('s', '1', value);
 
@@ -66,11 +59,6 @@ function App() {
   const sendDigitalContract = (value: boolean, contractName: string) => window.CrComLib.publishEvent('b', contractName, value);
   const sendAnalogContract = (value: number) => window.CrComLib.publishEvent('n', 'HomePage.AnalogEvent', value);
   const sendSerialContract = (value: string) => window.CrComLib.publishEvent('s', 'HomePage.StringEvent', value);
-
-  function sendDigitalClick(joinNumber: string){
-    sendDigital(true, joinNumber);
-    sendDigital(false, joinNumber);
-  }
 
     function sendDigitalContractClick(){
     sendDigitalContract(true, 'HomePage.DigitalEvent');
@@ -83,12 +71,10 @@ function App() {
       <p style={{ color: 'white' }}>Joins</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <button id="sendDigitalButton" className={digitalState1 ? "btnSelected" : "btn"} onClick={() => sendDigitalClick("1")}>Toggle Digital</button>
-          <p id="currentDigitalValue">{digitalState1.toString()}</p>
+          <Button joinNumber='1' label='Button 1'/>
         </div>
         <div className="controlGroup">
-          <button id="sendDigitalButton" className="btn" onClick={() => sendDigitalClick("10")}>Toggle Digital</button>
-          <p id="currentDigitalValue">{digitalState10.toString()}</p>
+          <Button joinNumber='10' label='Button 10'/>
         </div>
         <div className="controlGroup">
             <p id="currentAnalogValue">{analogState}</p>
