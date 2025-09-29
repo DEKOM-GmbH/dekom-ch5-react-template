@@ -24,11 +24,11 @@ export function Button(props:DigitalButtonProps) {
     const [digitalState, setDigitalState] = useState(false);
 
     useEffect(() => {
-        const digitalSubscribe = window.CrComLib.subscribeState('b', props.joinNumber, (value: boolean) => setDigitalState(value));
+        const digitalSubscribe = window.CrComLib.subscribeState('boolean', props.joinNumber, (value: boolean) => setDigitalState(value));
         
         // Unsubscribe when component unmounts!
         return () => {
-            window.CrComLib.unsubscribeState('b', props.joinNumber, digitalSubscribe);
+            window.CrComLib.unsubscribeState('boolean', props.joinNumber, digitalSubscribe);
         }
     })
 
@@ -37,6 +37,8 @@ export function Button(props:DigitalButtonProps) {
     }
     
     return (
-        <button id="digitalButton" className={digitalState ? "btnSelected" : "btn"} onClick={() => sendDigitalClick(props.joinNumber)}>{props.label}</button>
+        <button id="digitalButton" className={digitalState ? "btnSelected" : "btn"} onClick={() => sendDigitalClick(props.joinNumber)}>
+            {props.label}
+        </button>
     );
 }
