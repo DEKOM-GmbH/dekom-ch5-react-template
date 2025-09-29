@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 
-function sendDigital(joinNumber: string, value: boolean) {
+function sendDigitalEvent(joinNumber: string, value: boolean) {
     window.CrComLib.publishEvent('b', joinNumber, value);
 }
 
 function sendDigitalClick(joinNumber: string){
-    sendDigital(joinNumber, true);
-    sendDigital(joinNumber, false);
+    sendDigitalEvent(joinNumber, true);
+    sendDigitalEvent(joinNumber, false);
 }
 
 interface DigitalButtonProps {
