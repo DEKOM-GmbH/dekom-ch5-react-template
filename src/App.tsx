@@ -63,8 +63,8 @@ function App() {
       <p style={{ color: 'white' }}>Joins</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <Button joinNumber='1' label='Join 1' />
-          <MuteButton joinNumber='1' />
+          <Button joinNumber='1' label='Join 1' invisibleJoinNumber='10' />
+          <MuteButton joinNumber='1' disabledJoinNumber='10'/>
         </div>
         <div className="controlGroup">
           <Button joinNumber='10' label='Join 10'/>
