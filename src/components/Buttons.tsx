@@ -4,7 +4,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Mic01Icon, MicOff01Icon } from '@hugeicons/core-free-icons';
 
 function sendDigitalEvent(joinNumber: string, value: boolean) {
-    window.CrComLib.publishEvent('b', joinNumber, value);
+    window.CrComLib.publishEvent('boolean', joinNumber, value);
 }
 
 function sendDigitalClick(joinNumber: string){
