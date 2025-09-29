@@ -14,6 +14,7 @@ function sendDigitalClick(joinNumber: string){
 
 interface DigitalButtonProps {
     joinNumber: string;
+    joinNumberFb?: string;
     label?: string;
     debug?: boolean;
 }
@@ -21,6 +22,7 @@ interface DigitalButtonProps {
 export function Button(props:DigitalButtonProps) {
     
     // Check optional props and handle
+    const joinNumberFb = props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
     const label = props.label !== undefined ? props.label : '';
     const debug = props.debug !== undefined ? props.debug : false;
     
@@ -28,11 +30,12 @@ export function Button(props:DigitalButtonProps) {
     const [digitalState, setDigitalState] = useState(false);
 
     useEffect(() => {
-        const digitalSubscribe = window.CrComLib.subscribeState('boolean', props.joinNumber, (value: boolean) => setDigitalState(value));
+        // Subscribe to changes from control processor
+        const digitalSubscribe = window.CrComLib.subscribeState('boolean', joinNumberFb, (value: boolean) => setDigitalState(value));
         
         // Unsubscribe when component unmounts!
         return () => {
-            window.CrComLib.unsubscribeState('boolean', props.joinNumber, digitalSubscribe);
+            window.CrComLib.unsubscribeState('boolean', joinNumberFb, digitalSubscribe);
         }
     })
 
@@ -50,6 +53,7 @@ export function Button(props:DigitalButtonProps) {
 export function MuteButton(props:DigitalButtonProps) {
     
     // Check optional props and handle
+    const joinNumberFb = props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
     const label = props.label !== undefined ? props.label : '';
     const debug = props.debug !== undefined ? props.debug : false;
     
@@ -57,11 +61,11 @@ export function MuteButton(props:DigitalButtonProps) {
     const [digitalState, setDigitalState] = useState(false);
 
     useEffect(() => {
-        const digitalSubscribe = window.CrComLib.subscribeState('boolean', props.joinNumber, (value: boolean) => setDigitalState(value));
+        const digitalSubscribe = window.CrComLib.subscribeState('boolean', joinNumberFb, (value: boolean) => setDigitalState(value));
         
         // Unsubscribe when component unmounts!
         return () => {
-            window.CrComLib.unsubscribeState('boolean', props.joinNumber, digitalSubscribe);
+            window.CrComLib.unsubscribeState('boolean', joinNumberFb, digitalSubscribe);
         }
     })
 

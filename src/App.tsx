@@ -15,15 +15,14 @@ if (import.meta.env.VITE_APP_ENV === 'development') {
 function App() {
   const [analogState, setAnalogState] = useState(0);
   const [serialState, setSerialState] = useState("");
-  const [digitalContractState, setDigitalContractState] = useState(false);
   const [analogContractState, setAnalogContractState] = useState(0);
   const [serialContractState, setSerialContractState] = useState("");
 
   const webXPanelConfig = useMemo(() => ({
-    ipId: '0x03',
-    host: '0.0.0.0',
-    roomId: '',
-    authToken: ''
+    ipId: '0x10',
+    host: '172.28.65.197',
+    roomId: '5',
+    authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZTJiOThjLTM5MzUtNDVmMy1iYTY1LTM2ODk1MTJmNTdkYyIsImx2IjoiRGVmYXVsdCBMZXZlbCIsInZlciI6IjEuMCIsImV4cGkiOiIwIn0.wSDzTgieq1SvdFldEf6RAtymvbDOOBhRlY9eqbw04Gg'
   }), []); // Dependencies array is empty, so this object is created only once
 
   useWebXPanel(webXPanelConfig);
@@ -36,16 +35,15 @@ function App() {
     const s1Id = window.CrComLib.subscribeState('s', '1', (value: string) => setSerialState(value));
 
     // Contracts
-    const dc1Id = window.CrComLib.subscribeState('b', 'HomePage.DigitalState', (value: boolean) => setDigitalContractState(value));
     const ac1Id = window.CrComLib.subscribeState('n', 'HomePage.AnalogState', (value: number) => setAnalogContractState(value));
     const sc1Id = window.CrComLib.subscribeState('s', 'HomePage.StringState', (value: string) => setSerialContractState(value));
 
     return () => {
       // Unsubscribe from digital, analog, and serial joins 1 when component unmounts
+      window.CrComLib.unsubscribeState('n', '1', a1Id);
       window.CrComLib.unsubscribeState('s', '1', s1Id);
 
       // Contracts
-      window.CrComLib.unsubscribeState('b', 'HomePage.DigitalState', dc1Id);
       window.CrComLib.unsubscribeState('n', 'HomePage.AnalogState', ac1Id);
       window.CrComLib.unsubscribeState('s', 'HomePage.StringState', sc1Id);
     }
@@ -56,14 +54,8 @@ function App() {
   const sendSerial = (value: string) => window.CrComLib.publishEvent('s', '1', value);
 
   // Contracts
-  const sendDigitalContract = (value: boolean, contractName: string) => window.CrComLib.publishEvent('b', contractName, value);
   const sendAnalogContract = (value: number) => window.CrComLib.publishEvent('n', 'HomePage.AnalogEvent', value);
   const sendSerialContract = (value: string) => window.CrComLib.publishEvent('s', 'HomePage.StringEvent', value);
-
-    function sendDigitalContractClick(){
-    sendDigitalContract(true, 'HomePage.DigitalEvent');
-    sendDigitalContract(false, 'HomePage.DigitalEvent');
-  }
 
   return (
     <>
@@ -71,11 +63,11 @@ function App() {
       <p style={{ color: 'white' }}>Joins</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <Button joinNumber='1' label='Button 1' />
+          <Button joinNumber='1' label='Join 1' />
           <MuteButton joinNumber='1' />
         </div>
         <div className="controlGroup">
-          <Button joinNumber='10' label='Button 10'/>
+          <Button joinNumber='10' label='Join 10'/>
           <MuteButton joinNumber='10'/>
         </div>
         <div className="controlGroup">
@@ -90,8 +82,7 @@ function App() {
       <p style={{ color: 'white' }}>Contracts</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <button id="sendDigitalButton" className="btn" onClick={sendDigitalContractClick}>Toggle Digital</button>
-          <p id="currentDigitalValue">{digitalContractState.toString()}</p>
+          <Button joinNumber='HomePage.DigitalEvent' joinNumberFb='HomePage.DigitalState' label='HomePage.DigitalEvent'/>
         </div>
         <div className="controlGroup">
             <p id="currentAnalogValue">{analogContractState}</p>
