@@ -3,7 +3,7 @@
 import './assets/css/App.css' // Your CSS
 import { useState, useEffect, useMemo } from 'react';
 import useWebXPanel from './hooks/useWebXPanel';
-import { Button, MuteButton } from './components/Buttons';
+import { Button, MuteButtonType } from './components/Buttons';
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
 if (import.meta.env.VITE_APP_ENV === 'development') {
@@ -63,12 +63,12 @@ function App() {
       <p style={{ color: 'white' }}>Joins</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <Button joinNumber='1' invisibleJoinNumber='10'>Join 1</Button>
-          <MuteButton joinNumber='1' disabledJoinNumber='10'/>
+          <Button joinNumber='1' disabledJoinNumber='10'>Join 1</Button>
+          <Button joinNumber='1' disabledJoinNumber='10' muteType={MuteButtonType.MicMute}/>
         </div>
         <div className="controlGroup">
           <Button joinNumber='10'>Join 10</Button>
-          <MuteButton joinNumber='10'/>
+          <Button joinNumber='10' muteType={MuteButtonType.SpkMute}/>
         </div>
         <div className="controlGroup">
             <p id="currentAnalogValue">{analogState}</p>
@@ -82,7 +82,7 @@ function App() {
       <p style={{ color: 'white' }}>Contracts</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <Button joinNumber='HomePage.DigitalEvent' joinNumberFb='HomePage.DigitalState'>HomePage.DigitalEvent</Button>
+          <Button joinNumber='HomePage.DigitalEvent' joinNumberFb='HomePage.DigitalState' invisibleJoinNumber='10'>HomePage.DigitalEvent</Button>
         </div>
         <div className="controlGroup">
             <p id="currentAnalogValue">{analogContractState}</p>
