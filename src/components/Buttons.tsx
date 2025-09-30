@@ -12,12 +12,12 @@ function sendDigitalClick(joinNumber: string){
     sendDigitalEvent(joinNumber, false);
 }
 
-interface DigitalButtonProps {
+interface DigitalButtonProps extends React.PropsWithChildren {
+    children?: React.ReactNode;
     joinNumber: string;
     joinNumberFb?: string;
     invisibleJoinNumber?: string;
     disabledJoinNumber?: string;
-    label?: string;
     debug?: boolean;
 }
 
@@ -27,7 +27,6 @@ export function Button(props:DigitalButtonProps) {
     const joinNumberFb = props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
     const invisibleJoinNumber = props.invisibleJoinNumber !== undefined ? props.invisibleJoinNumber : '';
     const disabledJoinNumber = props.disabledJoinNumber !== undefined ? props.disabledJoinNumber : '';
-    const label = props.label !== undefined ? props.label : '';
     const debug = props.debug !== undefined ? props.debug : false;
     
     // Declare variable and its setter method with default value
@@ -73,7 +72,7 @@ export function Button(props:DigitalButtonProps) {
     
     return (
         <button id="digitalButton" disabled={disabledState} className={`${digitalState ? "btn selected" : "btn normal"} ${invisibleState ? "invisible" : ""} ${disabledState ? "disabled": ""}`} onClick={() => sendDigitalClick(props.joinNumber)}>
-            {label}
+            {props.children}
         </button>
     );
 }
@@ -84,7 +83,6 @@ export function MuteButton(props:DigitalButtonProps) {
     const joinNumberFb = props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
     const invisibleJoinNumber = props.invisibleJoinNumber !== undefined ? props.invisibleJoinNumber : '';
     const disabledJoinNumber = props.disabledJoinNumber !== undefined ? props.disabledJoinNumber : '';
-    const label = props.label !== undefined ? props.label : '';
     const debug = props.debug !== undefined ? props.debug : false;
     
     // Declare variable and its setter method with default value
@@ -129,7 +127,7 @@ export function MuteButton(props:DigitalButtonProps) {
     
     return (
         <button id="digitalButton" disabled={disabledState} className={`${digitalState ? "btn muted" : "btn normal"} ${invisibleState ? "invisible" : ""} ${disabledState ? "disabled" : ""}`} onClick={() => sendDigitalClick(props.joinNumber)}>
-            <HugeiconsIcon icon={digitalState ? MicOff01Icon : Mic01Icon} />{label}
+            <HugeiconsIcon icon={digitalState ? MicOff01Icon : Mic01Icon} />
         </button>
     );
 }

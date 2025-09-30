@@ -63,11 +63,11 @@ function App() {
       <p style={{ color: 'white' }}>Joins</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <Button joinNumber='1' label='Join 1' invisibleJoinNumber='10' />
+          <Button joinNumber='1' invisibleJoinNumber='10'>Join 1</Button>
           <MuteButton joinNumber='1' disabledJoinNumber='10'/>
         </div>
         <div className="controlGroup">
-          <Button joinNumber='10' label='Join 10'/>
+          <Button joinNumber='10'>Join 10</Button>
           <MuteButton joinNumber='10'/>
         </div>
         <div className="controlGroup">
@@ -82,7 +82,7 @@ function App() {
       <p style={{ color: 'white' }}>Contracts</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <Button joinNumber='HomePage.DigitalEvent' joinNumberFb='HomePage.DigitalState' label='HomePage.DigitalEvent'/>
+          <Button joinNumber='HomePage.DigitalEvent' joinNumberFb='HomePage.DigitalState'>HomePage.DigitalEvent</Button>
         </div>
         <div className="controlGroup">
             <p id="currentAnalogValue">{analogContractState}</p>
