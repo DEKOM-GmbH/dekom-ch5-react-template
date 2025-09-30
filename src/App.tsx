@@ -1,13 +1,13 @@
 // Uncomment the below line if you are using CH5 components.
 // import '@crestron/ch5-theme/output/themes/light-theme.css' // Crestron CSS. @crestron/ch5-theme/output/themes shows the other themes that can be used.
-import './assets/css/App.css' // Your CSS
-import { useState, useEffect, useMemo } from 'react';
-import useWebXPanel from './hooks/useWebXPanel';
-import { Button, MuteButtonType } from './components/Buttons';
+import "./assets/css/App.css"; // Your CSS
+import { useState, useEffect, useMemo } from "react";
+import useWebXPanel from "./hooks/useWebXPanel";
+import { Button, MuteButtonType } from "./components/Buttons";
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
-if (import.meta.env.VITE_APP_ENV === 'development') {
-  import('eruda').then(({ default: eruda }) => {
+if (import.meta.env.VITE_APP_ENV === "development") {
+  import("eruda").then(({ default: eruda }) => {
     eruda.init();
   });
 }
@@ -18,82 +18,144 @@ function App() {
   const [analogContractState, setAnalogContractState] = useState(0);
   const [serialContractState, setSerialContractState] = useState("");
 
-  const webXPanelConfig = useMemo(() => ({
-    ipId: '0x10',
-    host: '172.28.65.197',
-    roomId: '5',
-    authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZTJiOThjLTM5MzUtNDVmMy1iYTY1LTM2ODk1MTJmNTdkYyIsImx2IjoiRGVmYXVsdCBMZXZlbCIsInZlciI6IjEuMCIsImV4cGkiOiIwIn0.wSDzTgieq1SvdFldEf6RAtymvbDOOBhRlY9eqbw04Gg'
-  }), []); // Dependencies array is empty, so this object is created only once
+  const webXPanelConfig = useMemo(
+    () => ({
+      ipId: "0x10",
+      host: "172.28.65.197",
+      roomId: "5",
+      authToken:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZTJiOThjLTM5MzUtNDVmMy1iYTY1LTM2ODk1MTJmNTdkYyIsImx2IjoiRGVmYXVsdCBMZXZlbCIsInZlciI6IjEuMCIsImV4cGkiOiIwIn0.wSDzTgieq1SvdFldEf6RAtymvbDOOBhRlY9eqbw04Gg",
+    }),
+    []
+  ); // Dependencies array is empty, so this object is created only once
 
   useWebXPanel(webXPanelConfig);
 
   useEffect(() => {
     // Listen for digital, analog, and serial joins 1 from the control system.
-    // d1Id, a1Id, and s1Id are the subscription IDs for each join, they are 
+    // d1Id, a1Id, and s1Id are the subscription IDs for each join, they are
     // only used to unsubscribe from the join when the component unmounts
-    const a1Id = window.CrComLib.subscribeState('n', '1', (value: number) => setAnalogState(value));
-    const s1Id = window.CrComLib.subscribeState('s', '1', (value: string) => setSerialState(value));
+    const a1Id = window.CrComLib.subscribeState("n", "1", (value: number) =>
+      setAnalogState(value)
+    );
+    const s1Id = window.CrComLib.subscribeState("s", "1", (value: string) =>
+      setSerialState(value)
+    );
 
     // Contracts
-    const ac1Id = window.CrComLib.subscribeState('n', 'HomePage.AnalogState', (value: number) => setAnalogContractState(value));
-    const sc1Id = window.CrComLib.subscribeState('s', 'HomePage.StringState', (value: string) => setSerialContractState(value));
+    const ac1Id = window.CrComLib.subscribeState(
+      "n",
+      "HomePage.AnalogState",
+      (value: number) => setAnalogContractState(value)
+    );
+    const sc1Id = window.CrComLib.subscribeState(
+      "s",
+      "HomePage.StringState",
+      (value: string) => setSerialContractState(value)
+    );
 
     return () => {
       // Unsubscribe from digital, analog, and serial joins 1 when component unmounts
-      window.CrComLib.unsubscribeState('n', '1', a1Id);
-      window.CrComLib.unsubscribeState('s', '1', s1Id);
+      window.CrComLib.unsubscribeState("n", "1", a1Id);
+      window.CrComLib.unsubscribeState("s", "1", s1Id);
 
       // Contracts
-      window.CrComLib.unsubscribeState('n', 'HomePage.AnalogState', ac1Id);
-      window.CrComLib.unsubscribeState('s', 'HomePage.StringState', sc1Id);
-    }
+      window.CrComLib.unsubscribeState("n", "HomePage.AnalogState", ac1Id);
+      window.CrComLib.unsubscribeState("s", "HomePage.StringState", sc1Id);
+    };
   }, []);
 
   // Send digital, analog, and serial 1 joins to the control system
-  const sendAnalog = (value: number) => window.CrComLib.publishEvent('n', '1', value);
-  const sendSerial = (value: string) => window.CrComLib.publishEvent('s', '1', value);
+  const sendAnalog = (value: number) =>
+    window.CrComLib.publishEvent("n", "1", value);
+  const sendSerial = (value: string) =>
+    window.CrComLib.publishEvent("s", "1", value);
 
   // Contracts
-  const sendAnalogContract = (value: number) => window.CrComLib.publishEvent('n', 'HomePage.AnalogEvent', value);
-  const sendSerialContract = (value: string) => window.CrComLib.publishEvent('s', 'HomePage.StringEvent', value);
+  const sendAnalogContract = (value: number) =>
+    window.CrComLib.publishEvent("n", "HomePage.AnalogEvent", value);
+  const sendSerialContract = (value: string) =>
+    window.CrComLib.publishEvent("s", "HomePage.StringEvent", value);
 
   return (
     <>
       {/* Joins */}
-      <p style={{ color: 'white' }}>Joins</p>
+      <p style={{ color: "white" }}>Joins</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <Button joinNumber='1' disabledJoinNumber='10'>Join 1</Button>
-          <Button joinNumber='1' disabledJoinNumber='10' muteType={MuteButtonType.MicMute}/>
+          <Button joinNumber="1" disabledJoinNumber="10">
+            Join 1
+          </Button>
+          <Button
+            joinNumber="1"
+            disabledJoinNumber="10"
+            muteType={MuteButtonType.MicMute}
+          />
         </div>
         <div className="controlGroup">
-          <Button joinNumber='10'>Join 10</Button>
-          <Button joinNumber='10' muteType={MuteButtonType.SpkMute}/>
+          <Button joinNumber="10">Join 10</Button>
+          <Button joinNumber="10" muteType={MuteButtonType.SpkMute} />
         </div>
         <div className="controlGroup">
-            <p id="currentAnalogValue">{analogState}</p>
-            <input type="range" min="0" max="65535" value={analogState} placeholder="32767" id="analogSlider" onChange={(e) => sendAnalog(Number(e.target.value))} />
+          <p id="currentAnalogValue">{analogState}</p>
+          <input
+            type="range"
+            min="0"
+            max="65535"
+            value={analogState}
+            placeholder="32767"
+            id="analogSlider"
+            onChange={(e) => sendAnalog(Number(e.target.value))}
+          />
         </div>
         <div className="controlGroup">
-            <input type="text" name="Data" id="currentSerialValue" placeholder="Placeholder" value={serialState} onChange={(e) => sendSerial(e.target.value)} />
+          <input
+            type="text"
+            name="Data"
+            id="currentSerialValue"
+            placeholder="Placeholder"
+            value={serialState}
+            onChange={(e) => sendSerial(e.target.value)}
+          />
         </div>
       </div>
       {/* Contracts */}
-      <p style={{ color: 'white' }}>Contracts</p>
+      <p style={{ color: "white" }}>Contracts</p>
       <div className="controlGroupWrapper">
         <div className="controlGroup">
-          <Button joinNumber='HomePage.DigitalEvent' joinNumberFb='HomePage.DigitalState' invisibleJoinNumber='10'>HomePage.DigitalEvent</Button>
+          <Button
+            joinNumber="HomePage.DigitalEvent"
+            joinNumberFb="HomePage.DigitalState"
+            invisibleJoinNumber="10"
+          >
+            HomePage.DigitalEvent
+          </Button>
         </div>
         <div className="controlGroup">
-            <p id="currentAnalogValue">{analogContractState}</p>
-            <input type="range" min="0" max="65535" value={analogContractState} placeholder="32767" id="analogSlider" onChange={(e) => sendAnalogContract(Number(e.target.value))} />
+          <p id="currentAnalogValue">{analogContractState}</p>
+          <input
+            type="range"
+            min="0"
+            max="65535"
+            value={analogContractState}
+            placeholder="32767"
+            id="analogSlider"
+            onChange={(e) => sendAnalogContract(Number(e.target.value))}
+          />
         </div>
         <div className="controlGroup">
-            <input type="text" name="Data" id="currentSerialValue" placeholder="Placeholder" value={serialContractState} onChange={(e) => sendSerialContract(e.target.value)} />
+          <input
+            type="text"
+            name="Data"
+            id="currentSerialValue"
+            placeholder="Placeholder"
+            value={serialContractState}
+            onChange={(e) => sendSerialContract(e.target.value)}
+          />
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
