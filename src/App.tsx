@@ -3,7 +3,8 @@
 import "./assets/css/App.css"; // Your CSS
 import { useState, useEffect, useMemo } from "react";
 import useWebXPanel from "./hooks/useWebXPanel";
-import { Button, MuteButtonType } from "./components/Buttons";
+import { Button } from "./components/Buttons";
+import { MuteButtonType } from "./assets/enums/enums";
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
 if (import.meta.env.VITE_APP_ENV === "development") {

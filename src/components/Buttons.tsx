@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { MuteButtonType } from "../assets/enums/enums";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -7,12 +8,6 @@ import {
     VolumeHighIcon,
     VolumeOffIcon,
 } from "@hugeicons/core-free-icons";
-
-export const enum MuteButtonType {
-    None = 0,
-    MicMute = 1,
-    SpkMute = 2,
-}
 
 function sendDigitalEvent(joinNumber: string, value: boolean) {
     window.CrComLib.publishEvent("boolean", joinNumber, value);
