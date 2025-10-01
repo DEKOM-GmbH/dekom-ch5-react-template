@@ -67,6 +67,7 @@ export function Button(props: DigitalButtonProps) {
         let invisibleSubscribe = "";
         let disabledSubscribe = "";
 
+        // If invisibleJoinNumber or disabledJoinNumber not provided, skip subscribing
         if (props.invisibleJoinNumber == "") return;
         else
             invisibleSubscribe = window.CrComLib.subscribeState(
