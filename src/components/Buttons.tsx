@@ -111,7 +111,7 @@ export function Button(props: DigitalButtonProps) {
 
     if (debug) {
         console.log(
-            `Button click from join number ${props.joinNumber} and program state is ${digitalState}.`
+            `Button event with join number ${props.joinNumber} and program state is ${digitalState}.`
         );
     }
 
