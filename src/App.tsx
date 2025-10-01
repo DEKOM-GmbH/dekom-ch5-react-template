@@ -4,6 +4,7 @@ import "./assets/css/App.css"; // Your CSS
 import { useState, useEffect, useMemo } from "react";
 import useWebXPanel from "./hooks/useWebXPanel";
 import { Button } from "./components/Buttons";
+import { Slider } from "./components/Sliders";
 import { MuteButtonType } from "./assets/enums/enums";
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
@@ -14,9 +15,7 @@ if (import.meta.env.VITE_APP_ENV === "development") {
 }
 
 function App() {
-  const [analogState, setAnalogState] = useState(0);
   const [serialState, setSerialState] = useState("");
-  const [analogContractState, setAnalogContractState] = useState(0);
   const [serialContractState, setSerialContractState] = useState("");
 
   const webXPanelConfig = useMemo(
@@ -36,19 +35,11 @@ function App() {
     // Listen for digital, analog, and serial joins 1 from the control system.
     // d1Id, a1Id, and s1Id are the subscription IDs for each join, they are
     // only used to unsubscribe from the join when the component unmounts
-    const a1Id = window.CrComLib.subscribeState("n", "1", (value: number) =>
-      setAnalogState(value)
-    );
     const s1Id = window.CrComLib.subscribeState("s", "1", (value: string) =>
       setSerialState(value)
     );
 
     // Contracts
-    const ac1Id = window.CrComLib.subscribeState(
-      "n",
-      "HomePage.AnalogState",
-      (value: number) => setAnalogContractState(value)
-    );
     const sc1Id = window.CrComLib.subscribeState(
       "s",
       "HomePage.StringState",
@@ -57,24 +48,18 @@ function App() {
 
     return () => {
       // Unsubscribe from digital, analog, and serial joins 1 when component unmounts
-      window.CrComLib.unsubscribeState("n", "1", a1Id);
       window.CrComLib.unsubscribeState("s", "1", s1Id);
 
       // Contracts
-      window.CrComLib.unsubscribeState("n", "HomePage.AnalogState", ac1Id);
       window.CrComLib.unsubscribeState("s", "HomePage.StringState", sc1Id);
     };
   }, []);
 
   // Send digital, analog, and serial 1 joins to the control system
-  const sendAnalog = (value: number) =>
-    window.CrComLib.publishEvent("n", "1", value);
   const sendSerial = (value: string) =>
     window.CrComLib.publishEvent("s", "1", value);
 
   // Contracts
-  const sendAnalogContract = (value: number) =>
-    window.CrComLib.publishEvent("n", "HomePage.AnalogEvent", value);
   const sendSerialContract = (value: string) =>
     window.CrComLib.publishEvent("s", "HomePage.StringEvent", value);
 
@@ -98,16 +83,7 @@ function App() {
           <Button joinNumber="10" muteType={MuteButtonType.SpkMute} />
         </div>
         <div className="controlGroup">
-          <p id="currentAnalogValue">{analogState}</p>
-          <input
-            type="range"
-            min="0"
-            max="65535"
-            value={analogState}
-            placeholder="32767"
-            id="analogSlider"
-            onChange={(e) => sendAnalog(Number(e.target.value))}
-          />
+          <Slider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10" rangeMin={0} rangeMax={100} step={10} debug={true}>Mic</Slider>
         </div>
         <div className="controlGroup">
           <input
@@ -133,27 +109,18 @@ function App() {
           </Button>
         </div>
         <div className="controlGroup">
-          <p id="currentAnalogValue">{analogContractState}</p>
-          <input
-            type="range"
-            min="0"
-            max="65535"
-            value={analogContractState}
-            placeholder="32767"
-            id="analogSlider"
-            onChange={(e) => sendAnalogContract(Number(e.target.value))}
-          />
+          <Slider joinNumber="HomePage.AnalogEvent" rangeMin={0} rangeMax={100} />
         </div>
-        <div className="controlGroup">
-          <input
-            type="text"
-            name="Data"
-            id="currentSerialValue"
-            placeholder="Placeholder"
-            value={serialContractState}
-            onChange={(e) => sendSerialContract(e.target.value)}
-          />
-        </div>
+      </div>
+      <div className="controlGroup">
+        <input
+          type="text"
+          name="Data"
+          id="currentSerialValue"
+          placeholder="Placeholder"
+          value={serialContractState}
+          onChange={(e) => sendSerialContract(e.target.value)}
+        />
       </div>
     </>
   );
