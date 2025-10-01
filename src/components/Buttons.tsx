@@ -9,13 +9,12 @@ import {
     VolumeOffIcon,
 } from "@hugeicons/core-free-icons";
 
-function sendDigitalEvent(joinNumber: string, value: boolean) {
-    window.CrComLib.publishEvent("boolean", joinNumber, value);
+function sendDigitalHigh(joinNumber: string) {
+    window.CrComLib.publishEvent("boolean", joinNumber, true);
 }
 
-function sendDigitalClick(joinNumber: string) {
-    sendDigitalEvent(joinNumber, true);
-    sendDigitalEvent(joinNumber, false);
+function sendDigitalLow(joinNumber: string) {
+    window.CrComLib.publishEvent("boolean", joinNumber, false);
 }
 
 function iconDisplay(state: boolean, type: MuteButtonType) {
@@ -127,7 +126,10 @@ export function Button(props: DigitalButtonProps) {
                     : "normal"
                 } ${invisibleState ? "invisible" : ""} ${disabledState ? "disabled" : ""
                 }`}
-            onClick={() => sendDigitalClick(props.joinNumber)}
+            onTouchStart={() => sendDigitalHigh(props.joinNumber)}
+            onTouchEnd={() => sendDigitalLow(props.joinNumber)}
+            onMouseDown={() => sendDigitalHigh(props.joinNumber)}
+            onMouseUp={() => sendDigitalLow(props.joinNumber)}
         >
             {iconDisplay(digitalState, muteType)}
             {props.children}
