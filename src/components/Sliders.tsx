@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { MuteButtonType } from "../assets/enums/enums";
 
 function sendAnalogChange(joinNumber: string, value: number) {
     window.CrComLib.publishEvent("number", joinNumber, value);
