@@ -34,15 +34,7 @@ export default (config: { mode: string; }) => {
             dest: 'assets/'
           },
           {
-            src: 'src/assets/images/screenshot_narrow.jpg',
-            dest: 'assets/'
-          },
-          {
-            src: 'src/assets/images/screenshot_wide.jpg',
-            dest: 'assets/'
-          },
-          {
-            src: 'src/assets/images/vite.png',
+            src: 'src/assets/images/dekom _logo_visual-solutions.png',
             dest: 'assets/'
           }
         ]
