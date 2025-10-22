@@ -1,39 +1,20 @@
 import { useState, useEffect } from "react";
-import { MuteButtonType } from "../assets/variables/enums";
-import { Slider } from "@heroui/react";
-
-function sendAnalogChange(joinNumber: string, value: number | number[]) {
-
-    window.CrComLib.publishEvent("number", joinNumber, value);
-}
-
-function formatAsPercentSimple(value: number, decimalPlaces: number = 0): string {
-    const percentage = (value * 100).toFixed(decimalPlaces);
-    return `${percentage}%`;
-}
+import { Progress } from "@heroui/react";
 
 interface AnalogSliderProps extends React.PropsWithChildren {
     joinNumber: string;
-    joinNumberFb?: string;
-    orientation?: "vertical" | "horizontal";
     children?: React.ReactNode;
     rangeMin?: number;
     rangeMax?: number;
-    step?: number;
-    muteType?: MuteButtonType;
     invisibleJoinNumber?: string;
     disabledJoinNumber?: string;
     debug?: boolean;
 }
 
-export function CrSlider(props: AnalogSliderProps) {
+export function CrProgressBar(props: AnalogSliderProps) {
     // Check optional props and handle
-    const orientation = props.orientation !== undefined ? props.orientation : "vertical"
     const rangeMin = props.rangeMin !== undefined ? props.rangeMin : 0;
     const rangeMax = props.rangeMax !== undefined ? props.rangeMax : 65535;
-    const step = props.step !== undefined ? props.step : 1;
-    const joinNumberFb =
-        props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
     const invisibleJoinNumber =
         props.invisibleJoinNumber !== undefined ? props.invisibleJoinNumber : "";
     const disabledJoinNumber =
@@ -49,9 +30,10 @@ export function CrSlider(props: AnalogSliderProps) {
         // Subscribe to changes from control processor
         const analogSubscribe = window.CrComLib.subscribeState(
             "number",
-            joinNumberFb,
+            props.joinNumber,
             (value: number) => setAnalogState(value)
         );
+
         let invisibleSubscribe = "";
         let disabledSubscribe = "";
 
@@ -76,7 +58,7 @@ export function CrSlider(props: AnalogSliderProps) {
         return () => {
             window.CrComLib.unsubscribeState(
                 "number",
-                joinNumberFb,
+                props.joinNumber,
                 analogSubscribe
             );
 
@@ -100,28 +82,22 @@ export function CrSlider(props: AnalogSliderProps) {
 
     if (debug) {
         console.log(
-            `Slider change with join number ${props.joinNumber} and program state is ${analogState}.`
+            `Progress bar change with join number ${props.joinNumber} and program state is ${analogState}.`
         );
     }
 
     return (
         <>
-            <Slider
-                aria-label="Crestron Slider"
+            <Progress
+                aria-label="Crestron Progressbar"
                 label={props.children}
                 size="lg"
-                showTooltip={true}
-                hideValue={true}
+                showValueLabel={true}
                 minValue={rangeMin}
                 maxValue={rangeMax}
-                step={step}
-                orientation={orientation}
-                className={`${invisibleState ? "invisible" : ""} ${disabledState ? "disabled" : ""} ${orientation === "horizontal" ? "" : "h-[348px]"}`}
+                className={`${invisibleState ? "invisible" : ""} ${disabledState ? "disabled" : ""}`}
                 isDisabled={disabledState}
                 value={analogState}
-                getValue={(analogState) => formatAsPercentSimple(parseInt(analogState.toString()) / rangeMax)}
-                getTooltipValue={(analogState) => formatAsPercentSimple(parseInt(analogState.toString()) / rangeMax)}
-                onChange={(e) => sendAnalogChange(props.joinNumber, e)}
             />
             {debug === true ? analogState : ""}
         </>

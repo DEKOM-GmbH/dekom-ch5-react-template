@@ -1,11 +1,12 @@
 // Uncomment the below line if you are using CH5 components.
 // import '@crestron/ch5-theme/output/themes/light-theme.css' // Crestron CSS. @crestron/ch5-theme/output/themes shows the other themes that can be used.
 import "./assets/css/App.css"; // Your CSS
-import { useState, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import useWebXPanel from "./hooks/useWebXPanel";
-import { Button } from "./components/Buttons";
-import { Slider } from "./components/Sliders";
-import { MuteButtonType } from "./assets/enums/enums";
+import { CrButton } from "./components/Buttons";
+import { CrSlider } from "./components/Sliders";
+import { MuteButtonType } from "./assets/variables/enums";
+import { CrProgressBar } from "./components/Progress";
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
 if (import.meta.env.VITE_APP_ENV === "development") {
@@ -15,8 +16,6 @@ if (import.meta.env.VITE_APP_ENV === "development") {
 }
 
 function App() {
-  const [serialState, setSerialState] = useState("");
-  const [serialContractState, setSerialContractState] = useState("");
 
   const webXPanelConfig = useMemo(
     () => ({
@@ -31,96 +30,46 @@ function App() {
 
   useWebXPanel(webXPanelConfig);
 
-  useEffect(() => {
-    // Listen for digital, analog, and serial joins 1 from the control system.
-    // d1Id, a1Id, and s1Id are the subscription IDs for each join, they are
-    // only used to unsubscribe from the join when the component unmounts
-    const s1Id = window.CrComLib.subscribeState("s", "1", (value: string) =>
-      setSerialState(value)
-    );
-
-    // Contracts
-    const sc1Id = window.CrComLib.subscribeState(
-      "s",
-      "HomePage.StringState",
-      (value: string) => setSerialContractState(value)
-    );
-
-    return () => {
-      // Unsubscribe from digital, analog, and serial joins 1 when component unmounts
-      window.CrComLib.unsubscribeState("s", "1", s1Id);
-
-      // Contracts
-      window.CrComLib.unsubscribeState("s", "HomePage.StringState", sc1Id);
-    };
-  }, []);
-
-  // Send digital, analog, and serial 1 joins to the control system
-  const sendSerial = (value: string) =>
-    window.CrComLib.publishEvent("s", "1", value);
-
-  // Contracts
-  const sendSerialContract = (value: string) =>
-    window.CrComLib.publishEvent("s", "HomePage.StringEvent", value);
-
   return (
     <>
       {/* Joins */}
       <p style={{ color: "white" }}>Joins</p>
-      <div className="controlGroupWrapper">
-        <div className="controlGroup">
-          <Button joinNumber="1" disabledJoinNumber="10">
+      <div>
+        <div>
+          <CrButton joinNumber="1" disabledJoinNumber="10">
             Join 1
-          </Button>
-          <Button
+          </CrButton>
+          <CrButton
             joinNumber="1"
             disabledJoinNumber="10"
             muteType={MuteButtonType.MicMute}
           />
         </div>
-        <div className="controlGroup">
-          <Button joinNumber="10">Join 10</Button>
-          <Button joinNumber="10" muteType={MuteButtonType.SpkMute} />
+        <div>
+          <CrButton joinNumber="10">Join 10</CrButton>
+          <CrButton joinNumber="10" muteType={MuteButtonType.SpkMute} />
         </div>
-        <div className="controlGroup">
-          <Slider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10" rangeMin={0} rangeMax={100} step={10} debug={true}>Mic</Slider>
-        </div>
-        <div className="controlGroup">
-          <input
-            type="text"
-            name="Data"
-            id="currentSerialValue"
-            placeholder="Placeholder"
-            value={serialState}
-            onChange={(e) => sendSerial(e.target.value)}
-          />
+        <div>
+          <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic</CrSlider>
+          <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic 2</CrSlider>
+          <CrProgressBar joinNumber="1"/>
         </div>
       </div>
       {/* Contracts */}
       <p style={{ color: "white" }}>Contracts</p>
-      <div className="controlGroupWrapper">
-        <div className="controlGroup">
-          <Button
+      <div>
+        <div>
+          <CrButton
             joinNumber="HomePage.DigitalEvent"
             joinNumberFb="HomePage.DigitalState"
             invisibleJoinNumber="10"
           >
             HomePage.DigitalEvent
-          </Button>
+          </CrButton>
         </div>
-        <div className="controlGroup">
-          <Slider joinNumber="HomePage.AnalogEvent" rangeMin={0} rangeMax={100} />
+        <div>
+          <CrSlider joinNumber="HomePage.AnalogEvent" rangeMin={0} rangeMax={100} />
         </div>
-      </div>
-      <div className="controlGroup">
-        <input
-          type="text"
-          name="Data"
-          id="currentSerialValue"
-          placeholder="Placeholder"
-          value={serialContractState}
-          onChange={(e) => sendSerialContract(e.target.value)}
-        />
       </div>
     </>
   );

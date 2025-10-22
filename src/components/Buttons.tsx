@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MuteButtonType } from "../assets/enums/enums";
+import { MuteButtonType } from "../assets/variables/enums";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -8,6 +8,8 @@ import {
     VolumeHighIcon,
     VolumeOffIcon,
 } from "@hugeicons/core-free-icons";
+
+import {Button} from "@heroui/react";
 
 function sendDigitalHigh(joinNumber: string) {
     window.CrComLib.publishEvent("boolean", joinNumber, true);
@@ -39,7 +41,7 @@ interface DigitalButtonProps extends React.PropsWithChildren {
     debug?: boolean;
 }
 
-export function Button(props: DigitalButtonProps) {
+export function CrButton(props: DigitalButtonProps) {
     // Check optional props and handle
     const joinNumberFb =
         props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
@@ -116,23 +118,20 @@ export function Button(props: DigitalButtonProps) {
     }
 
     return (
-        <button
-            id="digitalButton"
-            disabled={disabledState}
-            className={`btn ${digitalState
+        <Button
+            aria-label="Crestron Button"
+            isDisabled={disabledState}
+            className={`${digitalState
                     ? muteType === MuteButtonType.None
                         ? "selected"
                         : "muted"
                     : "normal"
-                } ${invisibleState ? "invisible" : ""} ${disabledState ? "disabled" : ""
-                }`}
-            onTouchStart={() => sendDigitalHigh(props.joinNumber)}
-            onTouchEnd={() => sendDigitalLow(props.joinNumber)}
+                } ${invisibleState ? "invisible" : ""}`}
             onMouseDown={() => sendDigitalHigh(props.joinNumber)}
             onMouseUp={() => sendDigitalLow(props.joinNumber)}
         >
             {iconDisplay(digitalState, muteType)}
             {props.children}
-        </button>
+        </Button>
     );
 }

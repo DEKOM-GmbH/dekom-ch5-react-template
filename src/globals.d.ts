@@ -74,12 +74,6 @@ declare global {
     CrComLib: typeof import("@crestron/ch5-crcomlib/build_bundles/umd/@types/index");
     WebXPanel: typeof import("@crestron/ch5-webxpanel/dist/types/index");
   }
-
-  enum MuteButtonType {
-    None = 0,
-    MicMute = 1,
-    SpkMute = 2,
-}
 }
 
 declare module "react/jsx-runtime" {
