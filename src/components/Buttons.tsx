@@ -9,7 +9,7 @@ import {
     VolumeOffIcon,
 } from "@hugeicons/core-free-icons";
 
-import {Button} from "@heroui/react";
+import { Button } from "@heroui/react";
 
 function sendDigitalHigh(joinNumber: string) {
     window.CrComLib.publishEvent("boolean", joinNumber, true);
@@ -120,6 +120,7 @@ export function CrButton(props: DigitalButtonProps) {
     return (
         <Button
             aria-label="Crestron Button"
+            color={`${digitalState ? "secondary" : "primary"}`}
             isDisabled={disabledState}
             className={`${digitalState
                     ? muteType === MuteButtonType.None
@@ -127,8 +128,8 @@ export function CrButton(props: DigitalButtonProps) {
                         : "muted"
                     : "normal"
                 } ${invisibleState ? "invisible" : ""}`}
-            onMouseDown={() => sendDigitalHigh(props.joinNumber)}
-            onMouseUp={() => sendDigitalLow(props.joinNumber)}
+            onPressStart={() => sendDigitalHigh(props.joinNumber)}
+            onPressEnd={() => sendDigitalLow(props.joinNumber)}
         >
             {iconDisplay(digitalState, muteType)}
             {props.children}
