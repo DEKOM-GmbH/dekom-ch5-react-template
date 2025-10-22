@@ -35,7 +35,6 @@ function App() {
   return (
     <>
       <NavigationBar />
-      {/* Joins */}
       <p style={{ color: "white" }}>Joins</p>
       <div>
         <div>
@@ -59,7 +58,6 @@ function App() {
           <CrProgressCircular joinNumber="HomePage.AnalogEvent" />
         </div>
       </div>
-      {/* Contracts */}
       <p style={{ color: "white" }}>Contracts</p>
       <div>
         <div>

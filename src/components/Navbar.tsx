@@ -15,11 +15,11 @@ import TimeOfTheDay from "./TimeOfTheDay";
 export function NavigationBar() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
-        <Navbar maxWidth="full">
+        <Navbar maxWidth="full" isBordered>
             <NavbarBrand>
                 <Image
                     alt="Company Logo"
-                    src="/src/assets/images/dekom _logo_visual-solutions.png"
+                    src="/assets/dekom _logo_visual-solutions.png"
                     width={150}
                     radius="none"
                 />
