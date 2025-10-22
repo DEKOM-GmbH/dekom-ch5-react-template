@@ -8,6 +8,7 @@ import { CrSlider } from "./components/Sliders";
 import { CrProgressBar } from "./components/ProgressBar";
 import { MuteButtonType } from "./assets/variables/enums";
 import { CrProgressCircular } from "./components/ProgressCircular";
+import { NavigationBar } from "./components/Navbar";
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
 if (import.meta.env.VITE_APP_ENV === "development") {
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <>
+      <NavigationBar />
       {/* Joins */}
       <p style={{ color: "white" }}>Joins</p>
       <div>
