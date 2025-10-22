@@ -7,6 +7,7 @@ import { CrButton } from "./components/Buttons";
 import { CrSlider } from "./components/Sliders";
 import { CrProgressBar } from "./components/ProgressBar";
 import { MuteButtonType } from "./assets/variables/enums";
+import { CrProgressCircular } from "./components/ProgressCircular";
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
 if (import.meta.env.VITE_APP_ENV === "development") {
@@ -53,6 +54,7 @@ function App() {
           <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic</CrSlider>
           <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic 2</CrSlider>
           <CrProgressBar joinNumber="1"/>
+          <CrProgressCircular joinNumber="HomePage.AnalogEvent" />
         </div>
       </div>
       {/* Contracts */}
@@ -68,7 +70,7 @@ function App() {
           </CrButton>
         </div>
         <div>
-          <CrSlider joinNumber="HomePage.AnalogEvent" rangeMin={0} rangeMax={100} />
+          <CrSlider joinNumber="HomePage.AnalogEvent" />
         </div>
       </div>
     </>
