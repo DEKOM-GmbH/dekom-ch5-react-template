@@ -5,8 +5,8 @@ import { useMemo } from "react";
 import useWebXPanel from "./hooks/useWebXPanel";
 import { CrButton } from "./components/Buttons";
 import { CrSlider } from "./components/Sliders";
+import { CrProgressBar } from "./components/ProgressBar";
 import { MuteButtonType } from "./assets/variables/enums";
-import { CrProgressBar } from "./components/Progress";
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
 if (import.meta.env.VITE_APP_ENV === "development") {
