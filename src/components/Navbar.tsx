@@ -1,11 +1,11 @@
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@heroui/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
 import { Button, Image } from "@heroui/react"
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  useDisclosure
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    useDisclosure
 } from "@heroui/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ShutDownIcon } from "@hugeicons/core-free-icons"
