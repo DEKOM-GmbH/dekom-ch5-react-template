@@ -116,7 +116,7 @@ export function CrSlider(props: AnalogSliderProps) {
                 maxValue={rangeMax}
                 step={step}
                 orientation={orientation}
-                className={`${invisibleState ? "invisible" : ""} ${disabledState ? "disabled" : ""} ${orientation === "horizontal" ? "" : "h-[348px]"}`}
+                className={`m-4 ${invisibleState ? "invisible" : ""} ${disabledState ? "disabled" : ""} ${orientation === "horizontal" ? "" : "h-[348px] w-[60px]"}`}
                 isDisabled={disabledState}
                 value={analogState}
                 getValue={(analogState) => formatAsPercentSimple(parseInt(analogState.toString()) / rangeMax)}

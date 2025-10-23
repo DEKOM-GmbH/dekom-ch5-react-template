@@ -15,7 +15,7 @@ import TimeOfTheDay from "./TimeOfTheDay";
 export function NavigationBar() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
-        <Navbar maxWidth="full" isBordered>
+        <Navbar className="bg-gray-200" maxWidth="full" isBordered>
             <NavbarBrand>
                 <Image
                     alt="Company Logo"

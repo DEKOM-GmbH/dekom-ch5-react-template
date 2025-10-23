@@ -120,14 +120,9 @@ export function CrButton(props: DigitalButtonProps) {
     return (
         <Button
             aria-label="Crestron Button"
-            color={`${digitalState ? "secondary" : "primary"}`}
+            color={`${digitalState ? (muteType === MuteButtonType.None ? "secondary" : "danger") : "primary"}`}
             isDisabled={disabledState}
-            className={`${digitalState
-                    ? muteType === MuteButtonType.None
-                        ? "selected"
-                        : "muted"
-                    : "normal"
-                } ${invisibleState ? "invisible" : ""}`}
+            className={`m-2 ${invisibleState ? "invisible" : ""}`}
             onPressStart={() => sendDigitalHigh(props.joinNumber)}
             onPressEnd={() => sendDigitalLow(props.joinNumber)}
         >

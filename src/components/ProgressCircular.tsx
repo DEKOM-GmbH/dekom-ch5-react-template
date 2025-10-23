@@ -95,7 +95,7 @@ export function CrProgressCircular(props: AnalogSliderProps) {
                 showValueLabel={true}
                 minValue={rangeMin}
                 maxValue={rangeMax}
-                className={`${invisibleState ? "invisible" : ""} ${disabledState ? "disabled" : ""}`}
+                className={`m-4 ${invisibleState ? "invisible" : ""} ${disabledState ? "disabled" : ""}`}
                 isDisabled={disabledState}
                 value={analogState}
             />

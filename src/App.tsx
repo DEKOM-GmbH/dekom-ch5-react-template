@@ -35,44 +35,47 @@ function App() {
   return (
     <>
       <NavigationBar />
-      <p style={{ color: "white" }}>Joins</p>
-      <div>
-        <div>
-          <CrButton joinNumber="1" disabledJoinNumber="10">
-            Join 1
-          </CrButton>
-          <CrButton
-            joinNumber="1"
-            disabledJoinNumber="10"
-            muteType={MuteButtonType.MicMute}
-          />
-        </div>
-        <div>
-          <CrButton joinNumber="10">Join 10</CrButton>
-          <CrButton joinNumber="10" muteType={MuteButtonType.SpkMute} />
-        </div>
-        <div>
-          <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic</CrSlider>
-          <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic 2</CrSlider>
-          <CrProgressBar joinNumber="1"/>
+
+      <div className="flex flex-row m-4">
+        <div className="flex-auto" />
+        <div className="flex flex-col items-center w-3xl">
+          <CrProgressBar joinNumber="1" />
           <CrProgressCircular joinNumber="HomePage.AnalogEvent" />
         </div>
+        <div className="flex-auto" />
       </div>
-      <p style={{ color: "white" }}>Contracts</p>
-      <div>
-        <div>
-          <CrButton
-            joinNumber="HomePage.DigitalEvent"
-            joinNumberFb="HomePage.DigitalState"
-            invisibleJoinNumber="10"
-          >
-            HomePage.DigitalEvent
-          </CrButton>
-        </div>
-        <div>
-          <CrSlider joinNumber="HomePage.AnalogEvent" />
-        </div>
+
+      <div className="flex justify-center">
+        <CrButton
+          joinNumber="HomePage.DigitalEvent"
+          joinNumberFb="HomePage.DigitalState"
+          invisibleJoinNumber="10"
+        >
+          Contract
+        </CrButton>
       </div>
+
+      <div className="flex justify-center m-4">
+        <div className="flex flex-col items-center">
+          <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic 1</CrSlider>
+          <CrButton joinNumber="1" disabledJoinNumber="10" muteType={MuteButtonType.MicMute} />
+          <CrButton joinNumber="1" disabledJoinNumber="10">Join 1</CrButton>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic 2</CrSlider>
+          <CrButton joinNumber="1" disabledJoinNumber="10" muteType={MuteButtonType.MicMute} />
+          <CrButton joinNumber="1" disabledJoinNumber="10">Join 1</CrButton>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <CrSlider joinNumber="HomePage.AnalogEvent" disabledJoinNumber="10" invisibleJoinNumber="1">Speaker</CrSlider>
+          <CrButton joinNumber="10" disabledJoinNumber="1" muteType={MuteButtonType.SpkMute} />
+          <CrButton joinNumber="10" disabledJoinNumber="1">Join 10</CrButton>
+        </div>
+
+      </div>
+
     </>
   );
 }
