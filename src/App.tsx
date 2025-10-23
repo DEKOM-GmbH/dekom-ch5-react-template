@@ -9,6 +9,7 @@ import { CrProgressBar } from "./components/ProgressBar";
 import { MuteButtonType } from "./assets/variables/enums";
 import { CrProgressCircular } from "./components/ProgressCircular";
 import { NavigationBar } from "./components/Navbar";
+import { BottomNavigationBar } from "./components/BottomNavbar";
 
 // Initialize eruda for panel/app debugging capabilities (in dev mode only)
 if (import.meta.env.VITE_APP_ENV === "development") {
@@ -76,6 +77,7 @@ function App() {
 
       </div>
 
+      <BottomNavigationBar />
     </>
   );
 }
