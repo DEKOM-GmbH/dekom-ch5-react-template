@@ -12,7 +12,7 @@ import { ShutDownIcon } from "@hugeicons/core-free-icons"
 
 import TimeOfTheDay from "./TimeOfTheDay";
 
-export function NavigationBar() {
+export default function NavigationBar() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
         <Navbar className="bg-gray-200" maxWidth="full" isBordered>

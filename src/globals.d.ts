@@ -76,6 +76,12 @@ declare global {
   }
 }
 
+declare module "@react-types/shared" {
+  interface RouterConfig {
+    routerOptions: NavigateOptions;
+  }
+}
+
 declare module "react/jsx-runtime" {
   namespace JSX {
     interface IntrinsicElements {
