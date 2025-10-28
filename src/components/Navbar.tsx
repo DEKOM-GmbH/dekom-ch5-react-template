@@ -12,6 +12,12 @@ import { ShutDownIcon } from "@hugeicons/core-free-icons"
 
 import TimeOfTheDay from "./TimeOfTheDay";
 
+function HandleShutdownConfirm() {
+    window.CrComLib.publishEvent("boolean", "100", true);
+    window.CrComLib.publishEvent("boolean", "100", false);
+    // How do I close modal window after sending a command??
+}
+
 export default function NavigationBar() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
@@ -42,7 +48,7 @@ export default function NavigationBar() {
                                         <ModalHeader className="text-lg font-bold text-center">Turn Off System?</ModalHeader>
                                         <ModalBody>
                                             <Button onPress={onClose}>Cancel</Button>
-                                            <Button onPress={onClose} color="danger">Turn Off</Button>
+                                            <Button onPressStart={HandleShutdownConfirm} onPressEnd={onClose} color="danger">Turn Off</Button>
                                         </ModalBody>
                                     </>
                                 )
