@@ -3,7 +3,7 @@
 import "./assets/css/App.css"; // Your CSS
 import { useMemo } from "react";
 import useWebXPanel from "./hooks/useWebXPanel";
-import { HeroUIProvider } from '@heroui/react'
+import { HeroUIProvider, ToastProvider } from '@heroui/react'
 import NavigationBar from "./components/Navbar";
 import BottomNavigationBar from "./components/BottomNavbar";
 import PageMain from "./components/PageMain";
@@ -36,6 +36,7 @@ function App() {
 
   return (
     <HeroUIProvider navigate={navigate} useHref={useHref}>
+      <ToastProvider />
       <NavigationBar />
 
       <Routes>
