@@ -11,39 +11,34 @@ export default function PageMain() {
             <div className="flex flex-row m-4">
                 <div className="flex-auto" />
                 <div className="flex flex-col items-center w-3xl">
-                    <CrProgressBar joinNumber="1" />
-                    <CrProgressCircular joinNumber="HomePage.AnalogEvent" />
+                    <CrProgressBar joinNumber="98" />
+                    <CrProgressCircular joinNumber="98" />
                 </div>
                 <div className="flex-auto" />
             </div>
 
             <div className="flex justify-center">
-                <CrButton
-                    joinNumber="HomePage.DigitalEvent"
-                    joinNumberFb="HomePage.DigitalState"
-                    invisibleJoinNumber="10"
-                >
-                    Contract
-                </CrButton>
+                <CrButton joinNumber="98" loadingJoinNumber="101">Start Progress</CrButton>
+                <CrButton joinNumber="99">Hide Sliders</CrButton>
             </div>
 
             <div className="flex justify-center m-4">
                 <div className="flex flex-col items-center">
-                    <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic 1</CrSlider>
-                    <CrButton joinNumber="1" disabledJoinNumber="10" muteType={MuteButtonType.MicMute} />
-                    <CrButton joinNumber="1" disabledJoinNumber="10">Join 1</CrButton>
+                    <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="99">Mic 1</CrSlider>
+                    <CrButton joinNumber="1" disabledJoinNumber="3" invisibleJoinNumber="99" muteType={MuteButtonType.MicMute} />
+                    <CrButton joinNumber="1" disabledJoinNumber="3">Join 1</CrButton>
                 </div>
 
                 <div className="flex flex-col items-center">
-                    <CrSlider joinNumber="1" disabledJoinNumber="1" invisibleJoinNumber="10">Mic 2</CrSlider>
-                    <CrButton joinNumber="1" disabledJoinNumber="10" muteType={MuteButtonType.MicMute} />
-                    <CrButton joinNumber="1" disabledJoinNumber="10">Join 1</CrButton>
+                    <CrSlider joinNumber="2" disabledJoinNumber="2" invisibleJoinNumber="99">Mic 2</CrSlider>
+                    <CrButton joinNumber="2" disabledJoinNumber="3" invisibleJoinNumber="99" muteType={MuteButtonType.MicMute} />
+                    <CrButton joinNumber="2" disabledJoinNumber="3">Join 2</CrButton>
                 </div>
 
                 <div className="flex flex-col items-center">
-                    <CrSlider joinNumber="HomePage.AnalogEvent" disabledJoinNumber="10" invisibleJoinNumber="1">Speaker</CrSlider>
-                    <CrButton joinNumber="10" disabledJoinNumber="1" muteType={MuteButtonType.SpkMute} />
-                    <CrButton joinNumber="10" disabledJoinNumber="1">Join 10</CrButton>
+                    <CrSlider joinNumber="3" disabledJoinNumber="3" invisibleJoinNumber="99">Speaker</CrSlider>
+                    <CrButton joinNumber="3" invisibleJoinNumber="99" muteType={MuteButtonType.SpkMute} />
+                    <CrButton joinNumber="3">Join 3</CrButton>
                 </div>
             </div>
         </>
