@@ -38,25 +38,29 @@ interface DigitalButtonProps extends React.PropsWithChildren {
     muteType?: MuteButtonType;
     invisibleJoinNumber?: string;
     disabledJoinNumber?: string;
+    loadingJoinNumber?: string;
     debug?: boolean;
 }
 
 export function CrButton(props: DigitalButtonProps) {
     // Check optional props and handle
-    const joinNumberFb =
-        props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
     const muteType =
         props.muteType !== undefined ? props.muteType : MuteButtonType.None;
+    const joinNumberFb =
+        props.joinNumberFb !== undefined ? props.joinNumberFb : props.joinNumber;
     const invisibleJoinNumber =
         props.invisibleJoinNumber !== undefined ? props.invisibleJoinNumber : "";
     const disabledJoinNumber =
         props.disabledJoinNumber !== undefined ? props.disabledJoinNumber : "";
+    const loadingJoinNumber =
+        props.loadingJoinNumber !== undefined ? props.loadingJoinNumber : "";
     const debug = props.debug !== undefined ? props.debug : false;
 
     // Declare variable and its setter method with default value
     const [digitalState, setDigitalState] = useState(false);
     const [invisibleState, setInvisibleState] = useState(false);
     const [disabledState, setDisabledState] = useState(false);
+    const [loadingState, setLoadingState] = useState(false);
 
     useEffect(() => {
         // Subscribe to changes from control processor
@@ -67,8 +71,9 @@ export function CrButton(props: DigitalButtonProps) {
         );
         let invisibleSubscribe = "";
         let disabledSubscribe = "";
+        let loadingSubscribe = "";
 
-        // If invisibleJoinNumber or disabledJoinNumber not provided, skip subscribing
+        // If invisibleJoinNumber or disabledJoinNumber or loadingJoinNumber not provided, skip subscribing
         if (props.invisibleJoinNumber == "") return;
         else
             invisibleSubscribe = window.CrComLib.subscribeState(
@@ -83,6 +88,14 @@ export function CrButton(props: DigitalButtonProps) {
                 "boolean",
                 disabledJoinNumber,
                 (value: boolean) => setDisabledState(value)
+            );
+
+        if (props.loadingJoinNumber == "") return;
+        else
+            loadingSubscribe = window.CrComLib.subscribeState(
+                "boolean",
+                loadingJoinNumber,
+                (value: boolean) => setLoadingState(value)
             );
 
         // Unsubscribe when component unmounts!
@@ -108,6 +121,14 @@ export function CrButton(props: DigitalButtonProps) {
                     disabledJoinNumber,
                     disabledSubscribe
                 );
+
+            if (props.loadingJoinNumber == "") return;
+            else
+                window.CrComLib.unsubscribeState(
+                    "boolean",
+                    loadingJoinNumber,
+                    loadingSubscribe
+                );
         };
     });
 
@@ -122,6 +143,7 @@ export function CrButton(props: DigitalButtonProps) {
             aria-label="Crestron Button"
             color={`${digitalState ? (muteType === MuteButtonType.None ? "secondary" : "danger") : "primary"}`}
             isDisabled={disabledState}
+            isLoading={loadingState}
             className={`m-2 ${invisibleState ? "invisible" : ""}`}
             onPressStart={() => sendDigitalHigh(props.joinNumber)}
             onPressEnd={() => sendDigitalLow(props.joinNumber)}
